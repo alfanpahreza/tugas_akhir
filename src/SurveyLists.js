@@ -34,8 +34,8 @@ function SurveyList() {
         }
     },[surveyListData]);
 
-    const printSurveys = () => {
-        let surveyJSON = surveyListData;
+    const printSurveys = (surveyData) => {
+        let surveyJSON = surveyData;
         let surveyArray = [];
         let table = (<tr><td colSpan={3}>Belum ada data hasil survei (klik 'Refresh' untuk memuat ulang)</td></tr>);
         if(surveyJSON!=null){
@@ -81,7 +81,7 @@ function SurveyList() {
     return(
         <div>
             <h1>Daftar Survei</h1>
-            {surveyListData && (printSurveys())}
+            {surveyListData && (printSurveys(surveyListData))}
             <Button onClick={fetchData} variant="primary">
                 Refresh
             </Button>
