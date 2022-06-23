@@ -61,7 +61,7 @@ function WebInterface() {
       uploadSurveyData(selectedVideo,streetName,streetConfig,surveyorName,surveyDate)
     }
     else{
-      setMessage("File format is unsupported!\n(only upload mp4 files)");
+      setMessage("Format file salah!\n(hanya bisa menggunakan file .mp4)");
     }
   };
 

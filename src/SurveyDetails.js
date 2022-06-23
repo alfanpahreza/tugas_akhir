@@ -3,6 +3,7 @@ import React, {useState, useEffect} from "react";
 import { useParams } from "react-router-dom";
 import requestURL from './Api';
 import { Button,Table } from 'react-bootstrap';
+import fileDownload from 'js-file-download';
 
 function SurveyDetails() {
 
@@ -119,7 +120,7 @@ function SurveyDetails() {
             url: requestURL + 'survey/'+ fileName,
         })
             .catch(() => {
-                setMessage("Terjadi kesalahan saat mengambil detail survei");
+                setMessage("Terjadi kesalahan saat mengambil rincian survei");
             })
             .then((res) => {
                 let result = res.data.data;
@@ -140,10 +141,6 @@ function SurveyDetails() {
       }
     }, [details, fileName]);
 
-    const downloadXLSX = () => {
-      
-    }
-
     return (
     <div>
       <h1>Rincian Hasil Survei</h1>
@@ -160,7 +157,7 @@ function SurveyDetails() {
         <div className="p-2 bd-highlight">{details && (details.nama_penyurvei)}</div>
       </div>
       {details && (printDetails(details))}
-      <Button onClick={downloadXLSX} variant="primary">
+      <Button href={requestURL + "survey/excel/" + fileName} variant="primary">
           Download File Excel
       </Button>
       <div className="card m-3 text-center">
