@@ -3,7 +3,6 @@ import React, {useState, useEffect} from "react";
 import { useParams } from "react-router-dom";
 import requestURL from './Api';
 import { Button,Table } from 'react-bootstrap';
-import fileDownload from 'js-file-download';
 
 function SurveyDetails() {
 

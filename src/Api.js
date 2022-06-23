@@ -1,2 +1,2 @@
-const requestURL = "https://b49c-35-196-157-172.ngrok.io/";
+const requestURL = "https://7535-35-196-157-172.ngrok.io/";
 export default requestURL
