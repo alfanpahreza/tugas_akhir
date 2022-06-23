@@ -134,7 +134,6 @@ function WebInterface() {
               surveyResult.map(item => (
               <tr key={item.interval}>
                 <td>{item.interval}</td>
-                <td>{item.data[0].count}</td>
               </tr>
             )))}
           </tbody>
