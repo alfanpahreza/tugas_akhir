@@ -54,7 +54,7 @@ function WebInterface() {
     });
   };
 
-  const createSurvey = (event) => {
+  const beginSurvey = (event) => {
     event.preventDefault();
     let fileExtension = selectedVideo.name.split(".").pop();
     if(fileExtension === "mp4"){
@@ -69,7 +69,7 @@ function WebInterface() {
   <div>
     <h1>Survei Baru</h1>
     <div>
-      <form className="row g-3" onSubmit={createSurvey}>
+      <form className="row g-3" onSubmit={beginSurvey}>
         <div className="col-md-6">
           <label className="form-label">Nama Jalan</label>
           <input className="form-control" type="text" name="street" onInput={inputStreetName}/>
