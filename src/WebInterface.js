@@ -44,7 +44,7 @@ function WebInterface() {
     setMessage("Pembuatan survei dibatalkan")
   }
 
-  const uploadSurveyData = (video, street, config, name, date) => {
+  const uploadDataSurvey = (video, street, config, name, date) => {
     let formData = new FormData();
     formData.append("file", video);
     formData.append("street_name",street);
@@ -73,7 +73,7 @@ function WebInterface() {
     if (selectedVideo !== undefined) {
       let fileExtension = selectedVideo.name.split(".").pop();
       if(fileExtension === "mp4"){
-        uploadSurveyData(selectedVideo,streetName,streetConfig,surveyorName,surveyDate)
+        uploadDataSurvey(selectedVideo,streetName,streetConfig,surveyorName,surveyDate)
       }
       else{
         setMessage("Format file salah!\n(hanya bisa menggunakan file .mp4)");
