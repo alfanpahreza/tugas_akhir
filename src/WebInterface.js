@@ -1,15 +1,17 @@
 import axios from 'axios';
 import React, {useState} from "react";
 import requestURL from "./Api";
+import { Button, Form } from 'react-bootstrap';
 
 function WebInterface() {
 
-  const [selectedVideo, setSelectedVideo] = useState();
+  const [selectedVideo, setSelectedVideo] = useState(undefined);
   const [surveyorName, setSurveyorName] = useState(" ");
-  const [surveyDate, setSurveyDate] = useState(" ");
+  const [surveyDate, setSurveyDate] = useState(null);
   const [streetConfig, setStreetConfig] = useState(" ");
   const [streetName, setStreetName] = useState(" ");
   const [message, setMessage] = useState("No Message");
+  const controller = new AbortController();
 
   const selectVideo = (event) => {
     setSelectedVideo(event.target.files[0]);
@@ -31,6 +33,17 @@ function WebInterface() {
     setSurveyDate(event.target.value)
   }
 
+  const cancelSubmission = () => {
+    controller.abort()
+    document.getElementById("Form").reset();
+    setSelectedVideo(undefined)
+    setSurveyorName("");
+    setStreetName("");
+    setStreetConfig("");
+    setSurveyDate(null);
+    setMessage("Input data survei dibatalkan")
+  }
+
   const uploadSurveyData = (video, street, config, name, date) => {
     let formData = new FormData();
     formData.append("file", video);
@@ -42,10 +55,11 @@ function WebInterface() {
     axios({
       method: 'post',
       url: requestURL+'survey',
-      data: formData
+      data: formData,
+      signal: controller.signal
     })
     .catch(() => {
-      setMessage("Terjadi kesalahan saat upload video");
+      setMessage("Terjadi kesalahan saat mengunggah video");
       setSelectedVideo(undefined);
     })
     .then((res) =>{
@@ -56,12 +70,16 @@ function WebInterface() {
 
   const beginSurvey = (event) => {
     event.preventDefault();
-    let fileExtension = selectedVideo.name.split(".").pop();
-    if(fileExtension === "mp4"){
-      uploadSurveyData(selectedVideo,streetName,streetConfig,surveyorName,surveyDate)
-    }
-    else{
-      setMessage("Format file salah!\n(hanya bisa menggunakan file .mp4)");
+    if (selectedVideo !== undefined) {
+      let fileExtension = selectedVideo.name.split(".").pop();
+      if(fileExtension === "mp4"){
+        uploadSurveyData(selectedVideo,streetName,streetConfig,surveyorName,surveyDate)
+      }
+      else{
+        setMessage("Format file salah!\n(hanya bisa menggunakan file .mp4)");
+      } 
+    } else{
+      setMessage("Terjadi kesalahan saat mengunggah video");
     }
   };
 
@@ -69,7 +87,7 @@ function WebInterface() {
   <div>
     <h1>Survei Baru</h1>
     <div>
-      <form className="row g-3" onSubmit={beginSurvey}>
+      <Form className="row g-3" onSubmit={beginSurvey} id="Form">
         <div className="col-md-6">
           <label className="form-label">Nama Jalan</label>
           <input className="form-control" type="text" name="street" onInput={inputStreetName}/>
@@ -86,14 +104,17 @@ function WebInterface() {
           <label className="form-label">Tanggal Survei</label>
           <input className="form-control" type="date" name="date" onInput={inputDate}/>
         </div>
-        <div className="col-md-6">
+        <div className="col-md-12">
           <label className="form-label">Video</label>
           <input className="form-control" type="file" accept=".mp4" onInput={selectVideo}/>
         </div>
-        <div className="col-12">
-          <button type="submit" className="btn btn-success">Submit Data</button>
+        <div className="col-6">
+          <Button type="submit"  variant="success">Submit Data</Button>
         </div>
-      </form>
+        <div className='col-6 '>
+          <Button variant="danger" onClick={cancelSubmission}>Cancel</Button>
+        </div>
+      </Form>
       <div className="card m-3 text-center">
         {message}
       </div>
