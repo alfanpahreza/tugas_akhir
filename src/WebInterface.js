@@ -41,7 +41,7 @@ function WebInterface() {
     setStreetName("");
     setStreetConfig("");
     setSurveyDate(null);
-    setMessage("Input data survei dibatalkan")
+    setMessage("Pembuatan survei dibatalkan")
   }
 
   const uploadSurveyData = (video, street, config, name, date) => {
