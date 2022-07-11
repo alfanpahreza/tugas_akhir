@@ -16,7 +16,7 @@ function SurveyDetails() {
                           "sepeda_motor",
                           "sedan_jeep_wagon",
                           "angkutan_sedang",
-                          "pick_up_micro_truk",
+                          "pick-up_mikro_truk",
                           "bus_kecil",
                           "bus_besar",
                           "truk_2_sumbu_4_roda",
@@ -125,6 +125,7 @@ function SurveyDetails() {
                 let result = res.data.data;
                 setMessage(res.data.message)
                 if(result){
+                  localStorage.clear()
                   localStorage.setItem(fileName,JSON.stringify(result))
                   setDetails(JSON.parse(localStorage.getItem(fileName)))
                 }
@@ -139,6 +140,10 @@ function SurveyDetails() {
         }
       }
     }, [details, fileName]);
+
+    const download = () => {
+      setMessage("Mengunduh file Excel...")
+    }
 
     return (
     <div>
@@ -156,7 +161,7 @@ function SurveyDetails() {
         <div className="p-2 bd-highlight">{details && (details.nama_penyurvei)}</div>
       </div>
       {details && (printDetails(details))}
-      <Button href={requestURL + "survey/excel/" + fileName} variant="primary">
+      <Button href={requestURL + "survey/excel/" + fileName} variant="primary" onClick={download}>
           Download File Excel
       </Button>
       <div className="card m-3 text-center">

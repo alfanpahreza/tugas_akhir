@@ -51,7 +51,7 @@ function WebInterface() {
     formData.append("street_configuration",config);
     formData.append("survey_date",date,);
     formData.append("surveyor_name",name);
-
+    setMessage("Mengunggah data survei...");
     axios({
       method: 'post',
       url: requestURL+'survey',
@@ -72,11 +72,11 @@ function WebInterface() {
     event.preventDefault();
     if (selectedVideo !== undefined) {
       let fileExtension = selectedVideo.name.split(".").pop();
-      if(fileExtension === "mp4"){
+      if(fileExtension === "mp4" || fileExtension === "asf"){
         uploadDataSurvey(selectedVideo,streetName,streetConfig,surveyorName,surveyDate)
       }
       else{
-        setMessage("Format file salah!\n(hanya bisa menggunakan file .mp4)");
+        setMessage("Format file salah!\n(hanya bisa menggunakan file .mp4 & .asf)");
       } 
     } else{
       setMessage("Terjadi kesalahan saat mengunggah video");
@@ -108,10 +108,8 @@ function WebInterface() {
           <label className="form-label">Video</label>
           <input className="form-control" type="file" accept=".mp4" onInput={selectVideo}/>
         </div>
-        <div className="col-6">
+        <div className="d-flex justify-content-between">
           <Button type="submit"  variant="success">Submit Data</Button>
-        </div>
-        <div className='col-6 '>
           <Button variant="danger" onClick={cancelSubmission}>Cancel</Button>
         </div>
       </Form>

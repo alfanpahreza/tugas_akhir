@@ -20,6 +20,7 @@ function SurveyList() {
             })
             .then((res) => {
                 if(res){
+                    localStorage.clear();
                     surveys = (res.data.data);
                     setMessage(res.data.message);
                     setSurveyListData(surveys);
@@ -54,7 +55,7 @@ function SurveyList() {
                             {data[1]}
                         </td>
                         <td>
-                            {data[2]+".mp4"}
+                            {data[2]}
                         </td>
                         <td><Link to={`details/${fileName}`} className="btn btn-primary"><i className="bi bi-download"></i></Link></td>
                     </tr>
@@ -78,6 +79,7 @@ function SurveyList() {
         )
       }
 
+      
     return(
         <div>
             <h1>Daftar Survei</h1>
